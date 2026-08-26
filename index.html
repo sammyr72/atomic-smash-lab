@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atomic Smash Lab — Build matter with your hands, in mixed reality</title>
+<meta name="description" content="Pull protons out of thin air, stack them into atoms, and smash atoms into molecules. All 118 elements, in your own room. A mixed reality game for Meta Quest by Baglunch Games.">
+
+<meta property="og:title" content="Atomic Smash Lab">
+<meta property="og:description" content="Build matter with your hands. All 118 elements, in mixed reality on Meta Quest.">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='4' fill='%237CD6FF'/%3E%3Cellipse cx='16' cy='16' rx='14' ry='6' fill='none' stroke='%23A78BFA' stroke-width='1.5'/%3E%3Cellipse cx='16' cy='16' rx='14' ry='6' fill='none' stroke='%23A78BFA' stroke-width='1.5' transform='rotate(60 16 16)'/%3E%3Cellipse cx='16' cy='16' rx='14' ry='6' fill='none' stroke='%23A78BFA' stroke-width='1.5' transform='rotate(120 16 16)'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+<!-- ─────────────────────────── NAV ─────────────────────────── -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top">
+    <span class="nav__mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.5"/><ellipse cx="16" cy="16" rx="13" ry="5.5"/><ellipse cx="16" cy="16" rx="13" ry="5.5" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.5" transform="rotate(120 16 16)"/></svg>
+    </span>
+    <span class="nav__name">Atomic&nbsp;Smash&nbsp;Lab</span>
+  </a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#lab">The Lab</a>
+    <a href="#build">How it plays</a>
+    <a href="#elements">Elements</a>
+    <a href="#molecules">Molecules</a>
+    <a href="#specs">Specs</a>
+  </nav>
+  <a class="btn btn--sm" href="#get">Get it on Quest</a>
+</header>
+
+<!-- ─────────────────────────── HERO ─────────────────────────── -->
+<main id="top">
+<section class="hero">
+  <canvas class="hero__canvas" id="atomCanvas" aria-hidden="true"></canvas>
+  <div class="hero__aurora" aria-hidden="true"></div>
+
+  <div class="hero__inner">
+    <p class="eyebrow reveal">
+      <span class="dot" aria-hidden="true"></span>
+      Baglunch Games · Mixed Reality · Meta Quest
+    </p>
+
+    <h1 class="hero__title">
+      <span class="line reveal" style="--d:.05s">SMASH</span>
+      <span class="line reveal" style="--d:.12s"><em>ATOMS</em></span>
+      <span class="line reveal" style="--d:.19s">IN YOUR</span>
+      <span class="line line--alt reveal" style="--d:.26s">LIVING ROOM</span>
+    </h1>
+
+    <p class="hero__sub reveal" style="--d:.34s">
+      Reach into the air and pull a proton out of it. Stack protons, neutrons and
+      electrons into a real atom. Then grab two atoms — one in each hand — and
+      press them together until they fuse. All <strong>118 elements</strong>, floating
+      in the actual room you're standing in.
+    </p>
+
+    <div class="hero__cta reveal" style="--d:.42s">
+      <a class="btn btn--primary" href="#get">Get it on Quest</a>
+      <a class="btn btn--ghost" href="#build">See how it plays</a>
+    </div>
+
+    <dl class="stats reveal" style="--d:.5s">
+      <div class="stat"><dt>Elements</dt><dd data-count="118">118</dd></div>
+      <div class="stat"><dt>Molecule recipes</dt><dd data-count="6">6</dd></div>
+      <div class="stat"><dt>Controllers required</dt><dd data-count="0">0</dd></div>
+      <div class="stat"><dt>Rooms needed</dt><dd data-count="1">1</dd></div>
+    </dl>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- ─────────────────────────── MARQUEE ─────────────────────────── -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>H</span><span>He</span><span>Li</span><span>Be</span><span>B</span><span>C</span><span>N</span><span>O</span><span>F</span><span>Ne</span><span>Na</span><span>Mg</span><span>Al</span><span>Si</span><span>P</span><span>S</span><span>Cl</span><span>Ar</span><span>K</span><span>Ca</span><span>Fe</span><span>Cu</span><span>Zn</span><span>Ag</span><span>Sn</span><span>Au</span><span>Hg</span><span>Pb</span><span>U</span>
+    <span>H</span><span>He</span><span>Li</span><span>Be</span><span>B</span><span>C</span><span>N</span><span>O</span><span>F</span><span>Ne</span><span>Na</span><span>Mg</span><span>Al</span><span>Si</span><span>P</span><span>S</span><span>Cl</span><span>Ar</span><span>K</span><span>Ca</span><span>Fe</span><span>Cu</span><span>Zn</span><span>Ag</span><span>Sn</span><span>Au</span><span>Hg</span><span>Pb</span><span>U</span>
+  </div>
+</div>
+
+<!-- ─────────────────────────── THE LAB ─────────────────────────── -->
+<section class="section section--lab" id="lab">
+  <div class="wrap">
+    <p class="kicker reveal">01 — Passthrough</p>
+    <h2 class="big reveal">
+      Your couch is still there.<br>
+      Now there's a <em>periodic table</em><br>
+      floating over it.
+    </h2>
+    <div class="lab__grid">
+      <p class="lead reveal">
+        Atomic Smash Lab runs in colour passthrough. No void, no skybox, no
+        pretend laboratory — the game builds itself on top of your real room.
+        The periodic table wall hangs in your space. The supply racks sit within
+        arm's reach. The specimen cabinet goes against your actual wall.
+      </p>
+      <p class="lead reveal">
+        Take the headset off mid-build and everything freezes exactly where you
+        left it — physics, velocities, audio, all of it. Put it back on and the
+        lab picks up mid-thought. Nothing goes flying across the room while
+        you're not looking.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── THE LOOP ─────────────────────────── -->
+<section class="section section--loop" id="build">
+  <div class="wrap">
+    <p class="kicker reveal">02 — The loop</p>
+    <h2 class="big reveal">Pull. Stack. Smash.</h2>
+
+    <ol class="loop">
+      <li class="loop__step reveal">
+        <span class="loop__num">01</span>
+        <h3>Pull it in</h3>
+        <p>
+          A faint pointer line runs from your hand along your aim — no button to
+          hold. Squeeze the <b>trigger</b> at a distant atom and a glowing loop
+          snaps around it. Then physically <b>yank your arm back</b> and it reels
+          into your workspace. Harder yank, faster catch.
+        </p>
+        <p class="loop__meta">The Electron Lasso · trigger, or an index pinch with hand tracking</p>
+      </li>
+
+      <li class="loop__step reveal">
+        <span class="loop__num">02</span>
+        <h3>Stack the pieces</h3>
+        <p>
+          Every element is a recipe of three ingredients: protons, neutrons,
+          electrons. Grab them off the supply racks and drop them into the
+          assembly zone. Get the counts right and the atom snaps together with a
+          crack of light. Get them wrong and nothing happens — the atom simply
+          isn't that element yet.
+        </p>
+        <p class="loop__meta">Gold is 79 protons, 118 neutrons, 79 electrons. Good luck.</p>
+      </li>
+
+      <li class="loop__step reveal">
+        <span class="loop__num">03</span>
+        <h3>Smash them together</h3>
+        <p>
+          Hold <b>grip</b> near a finished atom to grab it — one in each hand —
+          then push them slowly toward each other. The electrons start to race.
+          A covalent bond spins up between them: a tapered plasma spindle with a
+          shared electron pair whirling around the axis, exactly the way the
+          chemistry actually works.
+        </p>
+        <p class="loop__meta">Trigger lassos, grip grabs. The two never fight.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ─────────────────────────── ELEMENTS ─────────────────────────── -->
+<section class="section section--elements" id="elements">
+  <div class="wrap">
+    <p class="kicker reveal">03 — The wall</p>
+    <h2 class="big reveal">All 118. Every one buildable.</h2>
+    <p class="lead lead--wide reveal">
+      Poke a tile on the periodic table wall, or lasso it in from across the
+      room. Here's a taste — tap one to see what it costs to build.
+    </p>
+
+    <div class="ptable" id="ptable" role="list"></div>
+
+    <div class="readout" id="readout" aria-live="polite">
+      <div class="readout__tile">
+        <span class="readout__num" id="rNum">1</span>
+        <span class="readout__sym" id="rSym">H</span>
+        <span class="readout__name" id="rName">Hydrogen</span>
+      </div>
+      <div class="readout__recipe">
+        <p class="readout__label">Build recipe</p>
+        <div class="recipe" id="recipe"></div>
+        <p class="readout__note" id="rNote">The simplest atom there is. Your first one, and the one Helios walks you through.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── MOLECULES ─────────────────────────── -->
+<section class="section section--mol" id="molecules">
+  <div class="wrap">
+    <p class="kicker reveal">04 — Molecule Lab</p>
+    <h2 class="big reveal">Then you start fusing.</h2>
+    <p class="lead lead--wide reveal">
+      Swipe the side arrows to pull up a new recipe. Each one wants specific
+      atoms in specific numbers — build them, then smash them together in
+      mid-air.
+    </p>
+
+    <div class="mols">
+      <article class="mol reveal">
+        <h3 class="mol__f">H<sub>2</sub></h3>
+        <p class="mol__n">Hydrogen gas</p>
+        <p class="mol__d">Two hydrogen atoms. The first thing you'll ever fuse, and the moment the game clicks.</p>
+      </article>
+      <article class="mol reveal">
+        <h3 class="mol__f">H<sub>2</sub>O</h3>
+        <p class="mol__n">Water</p>
+        <p class="mol__d">Two hydrogen, one oxygen, bent at an angle you can see with your own eyes.</p>
+      </article>
+      <article class="mol reveal">
+        <h3 class="mol__f">O<sub>2</sub></h3>
+        <p class="mol__n">Oxygen gas</p>
+        <p class="mol__d">A double bond — two plasma spindles running side by side between the pair.</p>
+      </article>
+      <article class="mol reveal">
+        <h3 class="mol__f">CO<sub>2</sub></h3>
+        <p class="mol__n">Carbon dioxide</p>
+        <p class="mol__d">One carbon, two oxygen, ruler-straight. Line them up or it won't take.</p>
+      </article>
+      <article class="mol reveal">
+        <h3 class="mol__f">NH<sub>3</sub></h3>
+        <p class="mol__n">Ammonia</p>
+        <p class="mol__d">A nitrogen wearing three hydrogens like a tripod, with a lone pair up top.</p>
+      </article>
+      <article class="mol reveal">
+        <h3 class="mol__f">CH<sub>4</sub></h3>
+        <p class="mol__n">Methane</p>
+        <p class="mol__d">Four hydrogens around one carbon. A perfect tetrahedron you assembled by hand.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── BENTO ─────────────────────────── -->
+<section class="section section--bento">
+  <div class="wrap">
+    <p class="kicker reveal">05 — In the box</p>
+    <h2 class="big reveal">Everything else in there.</h2>
+
+    <div class="bento">
+      <article class="cell cell--wide reveal">
+        <h3>The Specimen Cabinet</h3>
+        <p>
+          Every atom and every molecule you've ever finished gets its own lit
+          pedestal. Finish something new and it materialises in the cabinet
+          right then, mid-celebration, while you're still standing there.
+        </p>
+      </article>
+
+      <article class="cell reveal">
+        <h3>Helios</h3>
+        <p>
+          Your guide. Walks you from your first hydrogen tile to your first
+          molecule in about ninety seconds, then gets out of the way. Skippable
+          if you'd rather just start smashing.
+        </p>
+      </article>
+
+      <article class="cell reveal">
+        <h3>Hands or controllers</h3>
+        <p>
+          Full hand tracking — index pinch does what the trigger does. Or pick
+          up Touch controllers. Both work, and you can switch mid-session
+          without touching a menu.
+        </p>
+      </article>
+
+      <article class="cell cell--accent reveal">
+        <h3>Snap assist</h3>
+        <p>
+          A physical console in the lab with real buttons you press with a
+          finger. Dial snap strength to <b>1.0×</b>, <b>1.5×</b> or <b>2.0×</b>
+          if lining up particles by hand is fighting you.
+        </p>
+      </article>
+
+      <article class="cell reveal">
+        <h3>Colourblind mode</h3>
+        <p>
+          One button on the same console. Re-keys every particle and bond so
+          nothing in the game depends on telling red from green.
+        </p>
+      </article>
+
+      <article class="cell cell--wide reveal">
+        <h3>Tracking failsafe</h3>
+        <p>
+          Lose tracking, or lift the headset, and every rigidbody in the scene
+          freezes and every sound cuts. Come back and it all resumes with the
+          same velocities it had. No lost builds, no glitch-launched protons,
+          no audio bleeding behind the system menu.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SPECS + CTA ─────────────────────────── -->
+<section class="section section--specs" id="specs">
+  <div class="wrap">
+    <div class="specs__grid">
+      <div>
+        <p class="kicker reveal">06 — Specs</p>
+        <h2 class="big big--sm reveal">The details.</h2>
+        <dl class="spec reveal">
+          <div><dt>Platform</dt><dd>Meta Quest (standalone)</dd></div>
+          <div><dt>Mode</dt><dd>Mixed reality, colour passthrough</dd></div>
+          <div><dt>Input</dt><dd>Hand tracking &amp; Touch controllers</dd></div>
+          <div><dt>Play space</dt><dd>Roomscale or seated</dd></div>
+          <div><dt>Players</dt><dd>Single player</dd></div>
+          <div><dt>Version</dt><dd>1.0.1</dd></div>
+          <div><dt>Studio</dt><dd>Baglunch Games</dd></div>
+        </dl>
+      </div>
+
+      <aside class="get reveal" id="get">
+        <span class="get__glow" aria-hidden="true"></span>
+        <h3>Build your first atom tonight.</h3>
+        <p>
+          One proton. One electron. Ten seconds after you put the headset on,
+          you'll be holding hydrogen.
+        </p>
+        <a class="btn btn--primary btn--lg" href="#" data-store-link>Get it on Quest</a>
+        <p class="get__note">Meta Quest Store · Baglunch Games</p>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <p class="foot__brand">Atomic Smash Lab</p>
+    <p class="foot__links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:baglunchgames@gmail.com">Contact</a>
+    </p>
+    <p class="foot__copy">© <span id="year">2026</span> Baglunch Games. Built in Unity. Made for Meta Quest.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
