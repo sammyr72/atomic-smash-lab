@@ -10,6 +10,57 @@
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  /* ── screenshot lightbox ───────────────────────────────── */
+  var lb = document.getElementById('lb');
+  if (lb) {
+    var lbImg   = document.getElementById('lbImg');
+    var lbCap   = document.getElementById('lbCap');
+    var btns    = [].slice.call(document.querySelectorAll('.shot__btn'));
+    var idx     = 0;
+    var lastFocus = null;
+
+    var show = function (i) {
+      idx = (i + btns.length) % btns.length;
+      var b = btns[idx];
+      lbImg.src = b.getAttribute('data-full');
+      lbImg.alt = b.getAttribute('data-title') || '';
+      lbCap.textContent = (idx + 1) + ' / ' + btns.length + '  —  ' + (b.getAttribute('data-title') || '');
+    };
+
+    var open = function (i) {
+      lastFocus = document.activeElement;
+      show(i);
+      lb.hidden = false;
+      requestAnimationFrame(function () { lb.classList.add('is-open'); });
+      document.body.style.overflow = 'hidden';
+      document.getElementById('lbClose').focus();
+    };
+
+    var close = function () {
+      lb.classList.remove('is-open');
+      document.body.style.overflow = '';
+      var done = function () { lb.hidden = true; lbImg.src = ''; };
+      if (reduced) done(); else setTimeout(done, 320);
+      if (lastFocus) lastFocus.focus();
+    };
+
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { open(i); });
+    });
+
+    document.getElementById('lbClose').addEventListener('click', close);
+    document.getElementById('lbPrev').addEventListener('click', function () { show(idx - 1); });
+    document.getElementById('lbNext').addEventListener('click', function () { show(idx + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape')     { close(); }
+      if (e.key === 'ArrowLeft')  { show(idx - 1); }
+      if (e.key === 'ArrowRight') { show(idx + 1); }
+    });
+  }
+
   /* ── sticky nav ────────────────────────────────────────── */
   var nav = document.getElementById('nav');
   var onScroll = function () {
